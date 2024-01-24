@@ -1,0 +1,26 @@
+.grid {
+	width: 600px;
+	height: 600px;
+	border: solid black 1px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.grid div {
+	width: 18px;
+	height: 18px;
+    border: 1px solid #ccc; /* Add faint grey border to each grid cell */
+}
+
+.invader {
+	background-color: purple;
+	border-radius: 4px;
+}
+
+.shooter {
+	background-color: green;
+}
+
+.boom {
+	background-color: red;
+}
