@@ -30,12 +30,8 @@ function remove() {
 
 squares[currentShooterIndex].classList.add('shooter');
 
-function moveShooter(e) {
+function moveShooter(targetId) {
   squares[currentShooterIndex].classList.remove('shooter');
-  let targetId = e.target.id;
-  if (e.target.tagName === 'IMG') {
-    targetId = e.target.parentElement.id;
-  }
   switch (targetId) {
     case 'btnUp':
       if (currentShooterIndex >= 3 * width) {
@@ -54,36 +50,35 @@ function moveShooter(e) {
       if (currentShooterIndex % width < width - 1) currentShooterIndex += 1;
       break;
   }
-
-  if (e.type === 'keydown') {
-    switch (e.key) {
-      case 'ArrowUp':
-        if (currentShooterIndex >= 3 * width) {
-          currentShooterIndex -= width;
-        }
-        break;
-      case 'ArrowDown':
-        if (currentShooterIndex < squares.length - width) {
-          currentShooterIndex += width;
-        }
-        break;
-      case 'ArrowLeft':
-        if (currentShooterIndex % width !== 0) currentShooterIndex -= 1;
-        break;
-      case 'ArrowRight':
-        if (currentShooterIndex % width < width - 1) currentShooterIndex += 1;
-        break;
-    }
-  }
-
   squares[currentShooterIndex].classList.add('shooter');
 }
 
-document.getElementById('btnUp').addEventListener('click', moveShooter);
-document.getElementById('btnDown').addEventListener('click', moveShooter);
-document.getElementById('btnLeft').addEventListener('click', moveShooter);
-document.getElementById('btnRight').addEventListener('click', moveShooter);
+document.addEventListener('keydown', function(e) {
+  let targetId;
+  switch (e.key) {
+    case 'ArrowUp':
+      targetId = 'btnUp';
+      break;
+    case 'ArrowDown':
+      targetId = 'btnDown';
+      break;
+    case 'ArrowLeft':
+      targetId = 'btnLeft';
+      break;
+    case 'ArrowRight':
+      targetId = 'btnRight';
+      break;
+  }
+  if (targetId) {
+    moveShooter(targetId);
+  }
+});
 
-document.addEventListener('keydown', moveShooter);
+document.querySelector('.buttons').addEventListener('click', function(e) {
+  const button = e.target.closest('button');
+  if (button) {
+    moveShooter(button.id);
+  }
+});
 
 draw();
